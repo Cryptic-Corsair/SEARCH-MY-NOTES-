@@ -1,0 +1,110 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700;800;900&family=Press+Start+2P&display=swap');
+
+@layer base {
+  :root {
+    --background: 40 12% 10%;
+    --foreground: 43 30% 88%;
+
+    --card: 40 10% 13%;
+    --card-foreground: 43 30% 88%;
+
+    --popover: 40 10% 13%;
+    --popover-foreground: 43 30% 88%;
+
+    --primary: 38 55% 55%;
+    --primary-foreground: 40 12% 8%;
+
+    --secondary: 40 8% 18%;
+    --secondary-foreground: 43 20% 75%;
+
+    --muted: 40 6% 16%;
+    --muted-foreground: 40 10% 50%;
+
+    --accent: 38 40% 22%;
+    --accent-foreground: 38 55% 65%;
+
+    --destructive: 0 62% 50%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 40 8% 20%;
+    --input: 40 8% 20%;
+    --ring: 38 55% 55%;
+
+    --radius: 0.75rem;
+
+    --sidebar-background: 40 10% 11%;
+    --sidebar-foreground: 43 30% 88%;
+    --sidebar-primary: 38 55% 55%;
+    --sidebar-primary-foreground: 40 12% 8%;
+    --sidebar-accent: 38 40% 22%;
+    --sidebar-accent-foreground: 38 55% 65%;
+    --sidebar-border: 40 8% 20%;
+    --sidebar-ring: 38 55% 55%;
+
+    --gold: 38 55% 55%;
+    --gold-dim: 38 30% 35%;
+    --olive: 55 15% 25%;
+    --warm-white: 43 30% 88%;
+
+    --dropdown-beige: 40 40% 75%;
+    --dropdown-tan: 30 35% 60%;
+    --dropdown-brown: 20 40% 38%;
+    --dropdown-salmon: 12 55% 60%;
+    --dropdown-peach: 25 70% 75%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Doto', sans-serif;
+    font-weight: 900;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  @media (min-width: 768px) {
+    body {
+      font-size: 1.125rem;
+    }
+  }
+}
+
+@layer utilities {
+  .font-display {
+    font-family: 'Playfair Display', serif;
+  }
+  .font-pixel {
+    font-family: 'Press Start 2P', monospace;
+  }
+  .font-doto {
+    font-family: 'Doto', sans-serif;
+  }
+  @keyframes border-run {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 200% 50%; }
+  }
+  .animate-border-run {
+    position: relative;
+    border: 1px solid transparent;
+    background-clip: padding-box;
+  }
+  .animate-border-run::before {
+    content: "";
+    position: absolute;
+    top: -1px; left: -1px; right: -1px; bottom: -1px;
+    border-radius: 9999px;
+    background: linear-gradient(90deg, transparent, white, transparent);
+    background-size: 200% 100%;
+    animation: border-run 3s linear infinite;
+    z-index: -1;
+  }
+}
