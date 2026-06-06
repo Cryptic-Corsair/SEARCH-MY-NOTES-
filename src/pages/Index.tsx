@@ -174,7 +174,7 @@ const Index = () => {
   };
 
   const buildSearchUrl = (topicText: string) =>
-    `https://www.google.com/search?igu=1&q=${encodeURIComponent(buildQuery(topicText))}`;
+    `https://www.google.com/search?igu=1&gl=us&hl=en&pws=0&q=${encodeURIComponent(buildQuery(topicText))}`;
 
   const handleSearch = (topicText: string) => {
     if (!topicText.trim()) return;
