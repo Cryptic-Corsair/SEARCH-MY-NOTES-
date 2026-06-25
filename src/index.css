@@ -1,8 +1,8 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700;800;900&family=Press+Start+2P&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700;800;900&family=Press+Start+2P&display=swap');
 
 @layer base {
   :root {
@@ -106,38 +106,5 @@
     background-size: 200% 100%;
     animation: border-run 3s linear infinite;
     z-index: -1;
-  }
-
-  @keyframes landing-marquee {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
-  }
-
-  .landing-marquee {
-    animation: landing-marquee 34s linear infinite;
-  }
-
-  .landing-marquee:hover {
-    animation-play-state: paused;
-  }
-
-  .landing-scroll {
-    scrollbar-width: thin;
-    scrollbar-color: color-mix(in srgb, var(--primary) 55%, transparent) transparent;
-  }
-
-  .landing-scroll::-webkit-scrollbar {
-    width: 10px;
-  }
-
-  .landing-scroll::-webkit-scrollbar-track {
-    background: transparent;
-  }
-
-  .landing-scroll::-webkit-scrollbar-thumb {
-    background: color-mix(in srgb, var(--primary) 55%, transparent);
-    border: 3px solid transparent;
-    border-radius: 9999px;
-    background-clip: content-box;
   }
 }
