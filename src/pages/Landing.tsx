@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import {
   ArrowRight,
   BookOpenCheck,
+  CheckCircle2,
   Clock3,
   FileText,
   Layers3,
@@ -67,6 +68,8 @@ const FLOATING_TOPICS = [
   "Statistics",
 ];
 
+const HERO_CHIPS = ["Edexcel", "A-Level", "Physics", "Kinematics"];
+
 const LandingOrb = ({ className, delay = 0 }: { className: string; delay?: number }) => (
   <motion.div
     aria-hidden="true"
@@ -116,47 +119,122 @@ const Landing = () => {
         </Link>
       </nav>
 
-      <section className="relative mx-auto flex min-h-[calc(100vh-5.5rem)] w-full max-w-7xl flex-col items-center justify-center overflow-hidden px-4 py-10 text-center">
-        <LandingOrb className="left-[4%] top-[14%] h-24 w-24" />
-        <LandingOrb className="right-[8%] top-[24%] h-16 w-16" delay={1.2} />
-        <LandingOrb className="bottom-[18%] left-[18%] h-12 w-12" delay={2.1} />
+      <section className="relative mx-auto grid min-h-[calc(100vh-5.5rem)] w-full max-w-7xl items-center gap-12 overflow-hidden px-4 py-10 lg:grid-cols-[1.02fr_0.98fr] lg:py-16">
+        <LandingOrb className="left-[3%] top-[10%] h-24 w-24" />
+        <LandingOrb className="right-[6%] top-[16%] h-16 w-16" delay={1.2} />
+        <LandingOrb className="bottom-[10%] left-[42%] h-12 w-12" delay={2.1} />
+
+        <div className="relative z-10 text-center lg:text-left">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.92, y: 28 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="mb-8 inline-flex items-center gap-3 rounded-full border border-[var(--primary)]/30 bg-[var(--secondary)]/25 px-5 py-3 text-xs uppercase tracking-[0.32em] text-[var(--text)]/70 backdrop-blur-2xl shadow-[0_0_35px_-15px_var(--primary)]"
+          >
+            <Sparkles className="h-4 w-4 text-[var(--primary)]" />
+            revision search engine
+            <Wand2 className="h-4 w-4 text-[var(--accent)]" />
+          </motion.div>
+
+          <motion.h1
+            initial={{ opacity: 0, y: 35 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.9, delay: 0.1, ease: "easeOut" }}
+            className="max-w-5xl text-5xl font-black uppercase leading-[0.86] tracking-[-0.08em] text-[var(--text)] drop-shadow-[0_0_28px_var(--primary)] md:text-8xl xl:text-9xl"
+          >
+            Find the right notes before the timer runs out.
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.75, delay: 0.25 }}
+            className="mx-auto mt-7 max-w-3xl text-base leading-8 text-[var(--text)]/65 md:text-xl lg:mx-0"
+          >
+            Search My Notes turns board, level, subject, and topic context into a focused launchpad for exam-ready revision PDFs.
+          </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0, y: 22 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.35 }}
+            className="mt-9 flex flex-col items-center gap-3 sm:flex-row lg:justify-start"
+          >
+            <Link to="/" className="group inline-flex w-full items-center justify-center gap-3 rounded-full bg-[var(--primary)] px-7 py-4 text-sm uppercase tracking-[0.2em] text-[var(--bg)] shadow-[0_18px_45px_-20px_var(--primary)] transition hover:scale-105 sm:w-auto">
+              Start searching <ArrowRight className="h-5 w-5 transition group-hover:translate-x-1" />
+            </Link>
+            <a href="#features" className="inline-flex w-full items-center justify-center gap-3 rounded-full border border-[var(--text)]/15 bg-[var(--secondary)]/20 px-7 py-4 text-sm uppercase tracking-[0.2em] text-[var(--text)]/75 backdrop-blur-xl transition hover:border-[var(--primary)]/45 hover:text-[var(--primary)] sm:w-auto">
+              See features
+            </a>
+          </motion.div>
+
+          <div className="mt-10 grid w-full max-w-4xl grid-cols-1 gap-3 md:grid-cols-3">
+            <AnimatedMetric value="3" label="filters to focus" delay={0.45} />
+            <AnimatedMetric value="10x" label="less tab chaos" delay={0.55} />
+            <AnimatedMetric value="PDF" label="ready resources" delay={0.65} />
+          </div>
+        </div>
 
         <motion.div
-          initial={{ opacity: 0, scale: 0.92, y: 28 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="relative z-10 mb-8 inline-flex items-center gap-3 rounded-full border border-[var(--primary)]/30 bg-[var(--secondary)]/25 px-5 py-3 text-xs uppercase tracking-[0.32em] text-[var(--text)]/70 backdrop-blur-2xl shadow-[0_0_35px_-15px_var(--primary)]"
+          initial={{ opacity: 0, x: 42, rotate: 2 }}
+          animate={{ opacity: 1, x: 0, rotate: 0 }}
+          transition={{ duration: 0.9, delay: 0.2, ease: "easeOut" }}
+          className="relative z-10 mx-auto w-full max-w-xl"
         >
-          <Sparkles className="h-4 w-4 text-[var(--primary)]" />
-          revision search engine
-          <Wand2 className="h-4 w-4 text-[var(--accent)]" />
+          <div className="absolute -inset-6 rounded-[3.5rem] bg-[conic-gradient(from_140deg,var(--primary),transparent,var(--accent),transparent,var(--primary))] opacity-25 blur-3xl" />
+          <div className="relative overflow-hidden rounded-[3rem] border border-[var(--text)]/10 bg-[var(--secondary)]/30 p-5 text-left shadow-[0_30px_90px_-45px_var(--primary)] backdrop-blur-2xl">
+            <div className="absolute inset-0 bg-gradient-to-br from-white/15 via-transparent to-[var(--primary)]/10" />
+            <div className="relative rounded-[2.25rem] border border-white/10 bg-[var(--bg)]/70 p-5">
+              <div className="mb-5 flex items-center justify-between gap-3">
+                <div>
+                  <p className="text-xs uppercase tracking-[0.28em] text-[var(--primary)]">smart query</p>
+                  <h2 className="mt-2 text-2xl uppercase tracking-[-0.06em] text-[var(--text)]">Build a better search</h2>
+                </div>
+                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[var(--primary)] text-[var(--bg)] shadow-[0_0_28px_-10px_var(--primary)]">
+                  <Search className="h-6 w-6" />
+                </div>
+              </div>
+
+              <div className="flex flex-wrap gap-2">
+                {HERO_CHIPS.map((chip, index) => (
+                  <motion.span
+                    key={chip}
+                    initial={{ opacity: 0, y: 14 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.45, delay: 0.55 + index * 0.08 }}
+                    className="rounded-full border border-[var(--primary)]/20 bg-[var(--primary)]/10 px-4 py-2 text-xs uppercase tracking-[0.16em] text-[var(--text)]/75"
+                  >
+                    {chip}
+                  </motion.span>
+                ))}
+              </div>
+
+              <div className="mt-5 rounded-[1.5rem] border border-[var(--text)]/10 bg-black/20 p-4">
+                <div className="flex items-center gap-3 text-[var(--text)]/45">
+                  <Search className="h-4 w-4" />
+                  <span className="text-sm">site:cdn.savemyexams.com kinematics revision notes filetype:pdf</span>
+                </div>
+              </div>
+
+              <div className="mt-5 grid gap-3">
+                {["Exam-board context added", "Topic intent detected", "PDF-ready results prioritized"].map((item, index) => (
+                  <motion.div
+                    key={item}
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.5, delay: 0.8 + index * 0.08 }}
+                    className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.04] p-3 text-sm text-[var(--text)]/70"
+                  >
+                    <CheckCircle2 className="h-5 w-5 text-[var(--primary)]" />
+                    {item}
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          </div>
         </motion.div>
-
-        <motion.h1
-          initial={{ opacity: 0, y: 35 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, delay: 0.1, ease: "easeOut" }}
-          className="max-w-6xl text-5xl font-black uppercase leading-[0.88] tracking-[-0.08em] text-[var(--text)] drop-shadow-[0_0_28px_var(--primary)] md:text-8xl lg:text-9xl"
-        >
-          Search My <span className="font-display italic normal-case tracking-[-0.05em] text-[var(--primary)]">Notes</span>
-        </motion.h1>
-        <motion.p
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.75, delay: 0.25 }}
-          className="mt-7 max-w-3xl text-base leading-8 text-[var(--text)]/65 md:text-xl"
-        >
-          A glowing command center for finding exam-board-specific revision notes, topic PDFs, and focused study resources without the endless tab spiral.
-        </motion.p>
-
-        <div className="mt-10 grid w-full max-w-4xl grid-cols-1 gap-3 md:grid-cols-3">
-          <AnimatedMetric value="3" label="filters to focus" delay={0.35} />
-          <AnimatedMetric value="10x" label="less tab chaos" delay={0.45} />
-          <AnimatedMetric value="PDF" label="ready resources" delay={0.55} />
-        </div>
       </section>
 
-      <section className="mx-auto grid max-w-7xl gap-4 px-4 py-10 md:grid-cols-2 lg:grid-cols-4">
+      <section id="features" className="mx-auto grid max-w-7xl gap-4 px-4 py-10 md:grid-cols-2 lg:grid-cols-4">
         {LANDING_FEATURES.map((feature, index) => (
           <motion.article
             key={feature.title}
