@@ -1,5 +1,5 @@
 import { useState, useMemo, memo } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import { ExternalLink, LayoutGrid, GraduationCap, Library, ArrowUp, FlaskConical, Atom, Dna, Calculator, TrendingUp, Palette, Info, Maximize2, X } from "lucide-react";
 import CustomDropdown from "@/components/CustomDropdown";
 import MenuOverlay from "@/components/MenuOverlay";
@@ -145,7 +145,7 @@ const Index = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchUrl, setSearchUrl] = useState<string | null>(null);
   const [themeIndex, setThemeIndex] = useState(() => Math.floor(Math.random() * THEMES.length));
-  const [showInfo, setShowInfo] = useState(false);
+  const navigate = useNavigate();
 
   const theme = THEMES[themeIndex];
 
@@ -217,69 +217,7 @@ const Index = () => {
       <div className="fixed bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-[var(--accent)]/20 blur-[120px] rounded-full pointer-events-none -z-10" />
       <div className="fixed top-[40%] left-[60%] w-[30%] h-[30%] bg-[var(--text)]/10 blur-[100px] rounded-full pointer-events-none -z-10" />
 
-      <TopBar theme={theme} onToggleTheme={toggleTheme} onShowInfo={() => setShowInfo(true)} />
-
-      <AnimatePresence>
-        {showInfo && (
-          <div className="fixed inset-0 z-[100] flex items-end justify-center bg-black/40 backdrop-blur-sm p-0 md:p-4" onClick={() => setShowInfo(false)}>
-            <motion.div 
-              initial={{ y: "100%" }}
-              animate={{ y: 0 }}
-              exit={{ y: "100%" }}
-              transition={{ type: "spring", damping: 25, stiffness: 200 }}
-              className="bg-[var(--bg)] p-8 rounded-t-[3rem] md:rounded-[2rem] border-t md:border border-[var(--primary)]/30 max-w-xl w-full max-h-[90vh] overflow-y-auto transition-all duration-500 shadow-[0_-20px_50px_-12px_var(--primary)] relative overflow-hidden group" 
-              onClick={(e) => e.stopPropagation()}
-            >
-              {/* Drag Handle for Drawer feel */}
-              <div className="w-12 h-1.5 bg-[var(--text)]/10 rounded-full mx-auto mb-6 md:hidden" />
-
-              {/* Decorative background elements for info card */}
-              <div className="absolute top-0 right-0 w-32 h-32 bg-[var(--primary)]/5 blur-3xl rounded-full -mr-16 -mt-16" />
-              <div className="absolute bottom-0 left-0 w-32 h-32 bg-[var(--accent)]/5 blur-3xl rounded-full -ml-16 -mb-16" />
-              
-              <div className="relative z-10">
-                <h2 className="text-3xl font-medium mb-8 text-[var(--text)] tracking-widest uppercase flex items-center gap-4">
-                  <div className="p-2 rounded-xl bg-[var(--primary)]/10 border border-[var(--primary)]/20 shadow-[0_0_15px_var(--primary)]/20">
-                    <Info className="w-6 h-6 text-[var(--primary)]" />
-                  </div>
-                  About
-                </h2>
-                
-                <div className="space-y-6 text-[var(--text)]/70 leading-relaxed tracking-wide">
-                  <p className="text-lg font-light italic border-l-2 border-[var(--primary)]/30 pl-4">
-                    "Empowering students to master their curriculum, one topic at a time."
-                  </p>
-                  
-                  <p>
-                    Search My Notes is a precision-engineered tool for academic efficiency. We aggregate high-quality revision resources from trusted sources, specifically tailored for your exam board and level.
-                  </p>
-                  
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
-                    {[
-                      "Multi-Board Search",
-                      "Unit-Level Filtering",
-                      "Direct PDF Access",
-                      "Academic Efficiency"
-                    ].map((item, i) => (
-                      <div key={i} className="flex items-center gap-3 p-3 rounded-2xl bg-[var(--secondary)]/30 border border-[var(--text)]/5 hover:border-[var(--primary)]/20 transition-colors">
-                        <div className="w-1.5 h-1.5 rounded-full bg-[var(--primary)] shadow-[0_0_8px_var(--primary)]" />
-                        <span className="text-sm font-medium uppercase tracking-tighter">{item}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                <button 
-                  onClick={() => setShowInfo(false)} 
-                  className="mt-10 w-full px-8 py-4 bg-[var(--primary)] text-[var(--bg)] rounded-2xl font-bold uppercase tracking-widest hover:scale-[1.02] active:scale-[0.98] transition-all shadow-[0_10px_20px_-10px_var(--primary)]"
-                >
-                  Continue
-                </button>
-              </div>
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
+      <TopBar theme={theme} onToggleTheme={toggleTheme} onShowInfo={() => navigate("/landing")} />
 
       <div className={`flex-1 flex flex-col w-full max-w-5xl mx-auto px-4 transition-all duration-500 min-h-0 ${searchUrl ? 'pt-2' : 'justify-center pb-32'}`}>
         
