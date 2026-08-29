@@ -1,6 +1,6 @@
 import { useState, useMemo, memo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ExternalLink, LayoutGrid, GraduationCap, Library, ArrowUp, FlaskConical, Atom, Dna, Calculator, TrendingUp, Palette, Info, Maximize2, X } from "lucide-react";
+import { Download, ExternalLink, LayoutGrid, GraduationCap, Library, ArrowUp, FlaskConical, Atom, Dna, Calculator, TrendingUp, Palette, Info, Maximize2, X } from "lucide-react";
 import CustomDropdown from "@/components/CustomDropdown";
 import MenuOverlay from "@/components/MenuOverlay";
 import { BackgroundPaths } from "@/components/BackgroundPaths";
@@ -179,6 +179,17 @@ const Index = () => {
   const handleSearch = (topicText: string) => {
     if (!topicText.trim()) return;
     setSearchUrl(buildSearchUrl(topicText));
+  };
+
+  const downloadSelectedFile = () => {
+    if (!searchUrl) return;
+
+    const downloadLink = document.createElement("a");
+    downloadLink.href = searchUrl;
+    downloadLink.download = "search-my-notes-results";
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
   };
 
   const handleBatchSearch = () => {
@@ -368,6 +379,14 @@ const Index = () => {
                     title="Open in new tab"
                   >
                     <ExternalLink className="w-4 h-4" />
+                  </button>
+                  <button
+                    onClick={downloadSelectedFile}
+                    className="p-1.5 text-[var(--text)]/50 hover:text-[var(--primary)] hover:bg-[var(--primary)]/10 rounded-md transition-colors"
+                    title="Download selected file"
+                    aria-label="Download selected file"
+                  >
+                    <Download className="w-4 h-4" />
                   </button>
                 </div>
               </div>
