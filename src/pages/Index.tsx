@@ -1,6 +1,6 @@
 import { useState, useMemo, memo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ExternalLink, LayoutGrid, GraduationCap, Library, ArrowUp, FlaskConical, Atom, Dna, Calculator, TrendingUp, Palette, Info, Maximize2, X } from "lucide-react";
+import { Download, ExternalLink, LayoutGrid, GraduationCap, Library, ArrowUp, FlaskConical, Atom, Dna, Calculator, TrendingUp, Palette, Info, Maximize2, X } from "lucide-react";
 import CustomDropdown from "@/components/CustomDropdown";
 import MenuOverlay from "@/components/MenuOverlay";
 import { BackgroundPaths } from "@/components/BackgroundPaths";
@@ -144,6 +144,7 @@ const Index = () => {
   const [selectedTopics, setSelectedTopics] = useState<string[]>([]);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchUrl, setSearchUrl] = useState<string | null>(null);
+  const [downloadStatus, setDownloadStatus] = useState<"idle" | "downloading" | "error">("idle");
   const [themeIndex, setThemeIndex] = useState(() => Math.floor(Math.random() * THEMES.length));
   const [showInfo, setShowInfo] = useState(false);
 
@@ -178,7 +179,43 @@ const Index = () => {
 
   const handleSearch = (topicText: string) => {
     if (!topicText.trim()) return;
+    setDownloadStatus("idle");
     setSearchUrl(buildSearchUrl(topicText));
+  };
+
+  const getDownloadFilename = (url: string, contentDisposition: string | null) => {
+    const filenameMatch = contentDisposition?.match(/filename\*?=(?:UTF-8''|")?([^;"]+)/i);
+    if (filenameMatch?.[1]) return decodeURIComponent(filenameMatch[1].replace(/"/g, ""));
+
+    const filename = new URL(url).pathname.split("/").pop();
+    return filename?.toLowerCase().endsWith(".pdf") ? filename : "revision-notes.pdf";
+  };
+
+  const downloadSelectedFile = async () => {
+    if (!searchUrl) return;
+
+    setDownloadStatus("downloading");
+
+    try {
+      const response = await fetch(searchUrl);
+      const contentType = response.headers.get("content-type") ?? "";
+
+      if (!response.ok || !contentType.includes("pdf")) {
+        throw new Error("The selected resource is not a downloadable PDF.");
+      }
+
+      const downloadUrl = URL.createObjectURL(await response.blob());
+      const downloadLink = document.createElement("a");
+      downloadLink.href = downloadUrl;
+      downloadLink.download = getDownloadFilename(searchUrl, response.headers.get("content-disposition"));
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+      downloadLink.remove();
+      URL.revokeObjectURL(downloadUrl);
+      setDownloadStatus("idle");
+    } catch {
+      setDownloadStatus("error");
+    }
   };
 
   const handleBatchSearch = () => {
@@ -369,8 +406,22 @@ const Index = () => {
                   >
                     <ExternalLink className="w-4 h-4" />
                   </button>
+                  <button
+                    onClick={downloadSelectedFile}
+                    disabled={downloadStatus === "downloading"}
+                    className="p-1.5 text-[var(--text)]/50 hover:text-[var(--primary)] hover:bg-[var(--primary)]/10 rounded-md transition-colors disabled:cursor-wait disabled:opacity-50"
+                    title="Download selected PDF"
+                    aria-label="Download selected PDF"
+                  >
+                    <Download className="w-4 h-4" />
+                  </button>
                 </div>
               </div>
+              {downloadStatus === "error" && (
+                <p role="alert" className="shrink-0 px-4 py-2 text-xs text-red-500 bg-red-500/10 border-b border-red-500/20">
+                  Select a direct PDF resource before downloading it.
+                </p>
+              )}
               <div className="flex-1 relative bg-white">
                 <iframe
                   src={searchUrl}
